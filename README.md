@@ -1,8 +1,11 @@
 # PerconaAr
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/percona_ar_migration`. To experiment with that code, run `bin/console` for an interactive prompt.
+https://travis-ci.org/jamesmacwilliam/percona_ar.svg?branch=master
 
-TODO: Delete this and the text above, and describe your gem
+This gem adds another tool in your belt for rails migrations.  You can
+stil generate migrations, and they will function just as they always
+have, but there is also the option of generating percona_ar migrations,
+which use the percona tool for ALTER statements.
 
 ## Installation
 
@@ -29,7 +32,18 @@ https://www.percona.com/doc/percona-toolkit/2.1/pt-online-schema-change.html
 
 ## Usage
 
-TODO: Write usage instructions here
+- to get started, run: `rails generate percona_ar SomeMigrationName`
+
+- open the file in the db/migrate directory and use it just like you would
+  a normal rails migration
+
+- The ALTER commands will get run by pt-online-schema-change, and all
+  other commands get run by ActiveRecord just like they normally would
+
+- All the usual rails migration things still apply, your schema updates
+  still get kept track of wherever you usually have that done,
+  version gets added to schema_migrations, and rails yells at you if you
+  haven't yet migrated.
 
 ## Development
 
