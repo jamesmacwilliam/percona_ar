@@ -1,6 +1,7 @@
 # PerconaAr
 
-https://travis-ci.org/jamesmacwilliam/percona_ar.svg?branch=master
+[![Build
+Status](https://travis-ci.org/jamesmacwilliam/percona_ar.svg?branch=master)](https://travis-ci.org/jamesmacwilliam/percona_ar)
 
 This gem adds another tool in your belt for rails migrations.  You can
 stil generate migrations, and they will function just as they always
