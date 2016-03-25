@@ -1,5 +1,17 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'percona_ar'
+require 'coveralls'
+require 'simplecov'
+require "codeclimate-test-reporter"
+
+Coveralls.wear!
+
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
+    SimpleCov::Formatter::HTMLFormatter,
+      Coveralls::SimpleCov::Formatter
+])
+
+CodeClimate::TestReporter.start
 
 $db_name = ENV["db"] || "myapp_test"
 ActiveRecord::Base.establish_connection(

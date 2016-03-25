@@ -13,7 +13,7 @@ class PerconaAr::Connection < ActiveRecord::ConnectionAdapters::Mysql2Adapter
     PerconaAr::PtOnlineSchemaChangeExecutor.new(sql).call
   end
 
-  def not_implemented(*args)
+  def not_implemented(*)
     raise NotImplementedError.new(
       "This is not implemented with the percona tool, please use a standard migration"
     )
