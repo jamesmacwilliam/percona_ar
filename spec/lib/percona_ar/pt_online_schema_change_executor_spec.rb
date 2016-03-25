@@ -17,7 +17,7 @@ RSpec.describe PerconaAr::PtOnlineSchemaChangeExecutor do
     context "when sql has alter statement" do
       let(:sql) { "alter table `users` drop `foo`" }
 
-      it { is_expected.to receive(:sh).with(/pt.online.schema.change.*[-]u.*[-]h.*[-]p.*alter.*drop.*foo.*execute.D.#{@db_name.gsub("_", ".")}.t.users/) }
+      it { is_expected.to receive(:sh).with(/pt.online.schema.change.*[-]u.*[-]h.*[-]p.*alter.*drop.*foo.*execute.D.#{$db_name.gsub("_", ".")}.t.users/) }
     end
   end
 end

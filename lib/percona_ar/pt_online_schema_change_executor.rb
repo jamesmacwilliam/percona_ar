@@ -1,3 +1,4 @@
+require 'rake'
 require 'rake/file_utils'
 
 class PerconaAr::PtOnlineSchemaChangeExecutor
