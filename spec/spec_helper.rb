@@ -4,6 +4,8 @@ require 'coveralls'
 require 'simplecov'
 require "codeclimate-test-reporter"
 
+CodeClimate::TestReporter.start
+
 Coveralls.wear!
 
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
@@ -11,7 +13,8 @@ SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
       Coveralls::SimpleCov::Formatter
 ])
 
-CodeClimate::TestReporter.start
+dir = File.join("..", "coverage")
+SimpleCov.coverage_dir(dir)
 
 $db_name = ENV["db"] || "myapp_test"
 ActiveRecord::Base.establish_connection(
