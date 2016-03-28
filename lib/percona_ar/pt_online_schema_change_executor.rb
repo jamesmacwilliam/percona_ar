@@ -19,7 +19,7 @@ class PerconaAr::PtOnlineSchemaChangeExecutor
   private
 
   def suffix(table, cmd)
-    "'#{cmd}' --recursion-method processlist --no-check-alter --execute D=#{config[:database]},t=#{table}"
+    "'#{cmd}' --recursion-method none --no-check-alter --execute D=#{config[:database]},t=#{table}"
 
   end
 
