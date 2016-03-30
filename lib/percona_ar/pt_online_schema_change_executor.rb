@@ -19,8 +19,12 @@ class PerconaAr::PtOnlineSchemaChangeExecutor
   private
 
   def suffix(table, cmd)
-    "'#{cmd}' --recursion-method none --no-check-alter --execute D=#{config[:database]},t=#{table}"
+    "'#{get_sql_for(cmd)}' --recursion-method none --no-check-alter --execute D=#{config[:database]},t=#{table}"
+  end
 
+  def get_sql_for(cmd)
+    return cmd unless cmd =~ /DROP/i && !(cmd =~ /COLUMN/i)
+    cmd.gsub(/DROP/i, "DROP COLUMN")
   end
 
   def boilerplate
