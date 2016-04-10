@@ -1,5 +1,6 @@
 require 'rake'
 require 'rake/file_utils'
+require 'percona_ar/sql_parser'
 
 class PerconaAr::PtOnlineSchemaChangeExecutor
   include FileUtils
@@ -11,20 +12,13 @@ class PerconaAr::PtOnlineSchemaChangeExecutor
   end
 
   def call
-    if sql =~ /^ALTER TABLE `([^`]*)` (.*)/i
-      sh "#{boilerplate}#{suffix($1, $2)}"
-    end
+    sh "#{boilerplate}#{suffix(PerconaAr::SqlParser.parse(sql))}"
   end
 
   private
 
-  def suffix(table, cmd)
-    "'#{get_sql_for(cmd)}' --recursion-method none --no-check-alter --execute D=#{config[:database]},t=#{table}"
-  end
-
-  def get_sql_for(cmd)
-    return cmd unless cmd =~ /DROP/i && !(cmd =~ /COLUMN/i)
-    cmd.gsub(/DROP/i, "DROP COLUMN")
+  def suffix(table:, cmd:)
+    "'#{cmd}' --recursion-method none --no-check-alter --execute D=#{config[:database]},t=#{table}"
   end
 
   def boilerplate
