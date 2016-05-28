@@ -10,7 +10,7 @@ class PerconaAr::Connection < ActiveRecord::ConnectionAdapters::Mysql2Adapter
 
   def execute(sql, name = nil)
     return super unless sql =~ /^ALTER TABLE.*/
-    PerconaAr::PtOnlineSchemaChangeExecutor.new(sql).call
+    $query_builder.add sql
   end
 
   def not_implemented(*)
