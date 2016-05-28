@@ -4,27 +4,21 @@ require 'rake/file_utils'
 class PerconaAr::PtOnlineSchemaChangeExecutor
   include FileUtils
 
-  attr_accessor :sql
+  attr_accessor :sql, :table
 
-  def initialize(sql)
+  def initialize(table, sql)
+    @table = table
     @sql = sql
   end
 
   def call
-    if sql =~ /^ALTER TABLE `([^`]*)` (.*)/i
-      sh "#{boilerplate}#{suffix($1, $2)}"
-    end
+    sh "#{boilerplate}#{suffix(table, sql)}"
   end
 
   private
 
   def suffix(table, cmd)
-    "'#{get_sql_for(cmd)}' --recursion-method none --no-check-alter --execute D=#{config[:database]},t=#{table}"
-  end
-
-  def get_sql_for(cmd)
-    return cmd unless cmd =~ /DROP/i && !(cmd =~ /COLUMN/i)
-    cmd.gsub(/DROP/i, "DROP COLUMN")
+    "'#{cmd}' --recursion-method none --no-check-alter --execute D=#{config[:database]},t=#{table}"
   end
 
   def boilerplate

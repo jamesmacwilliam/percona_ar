@@ -2,10 +2,10 @@ require 'spec_helper'
 
 RSpec.describe PerconaAr::Connection do
   let!(:lib) { described_class.new(ActiveRecord::Base.connection) }
-  let(:executor) { PerconaAr::PtOnlineSchemaChangeExecutor }
+  let(:builder) { $query_builder }
 
   before do
-    allow(executor).to receive(:new) { double(:call => "") }
+    allow(builder).to receive(:add)
     allow_any_instance_of(ActiveRecord::ConnectionAdapters::Mysql2Adapter).
       to receive(:execute)
   end
@@ -19,13 +19,13 @@ RSpec.describe PerconaAr::Connection do
   describe "#execute" do
     it "uses percona tool when sql is an alter statement" do
       sql = "ALTER TABLE `users` drop column `foo`"
-      expect(executor).to receive(:new).with(sql)
+      expect(builder).to receive(:add).with(sql)
       lib.execute(sql)
     end
 
     it "uses ActiveRecord when sql is not an alter statement" do
       sql = "SHOW FIELDS FOR users"
-      expect(executor).not_to receive(:new)
+      expect(builder).not_to receive(:add)
       lib.execute(sql)
     end
   end
