@@ -5,7 +5,7 @@ class PerconaAr::Migration < ActiveRecord::Migration
   end
 
   def migrate(*args)
-    $query_builder = PerconaAr::QueryBuilder.new
+    $query_builder = PerconaAr::QueryBuilder.new connection
     super
     $query_builder.execute
   end
