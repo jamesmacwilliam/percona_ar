@@ -1,5 +1,5 @@
 class PerconaAr::QueryBuilder
-  def initialize(conn)
+  def initialize(conn = ActiveRecord::Base.connection)
     @tables = Hash.new {|h, k| h[k] = [] }
     @conn = conn
   end

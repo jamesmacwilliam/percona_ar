@@ -6,7 +6,7 @@ class PerconaAr::PtOnlineSchemaChangeExecutor
 
   attr_accessor :sql, :table, :conn
 
-  def initialize(table, sql, conn)
+  def initialize(table, sql, conn = ActiveRecord::Base.connection)
     @table = table
     @sql = sql
     @conn = conn

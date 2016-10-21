@@ -41,7 +41,8 @@ RSpec.describe PerconaAr::QueryBuilder do
 
     context "when sql has alter statement" do
       let(:sql) { "alter table `users` `foo` `bar` varchar(36)" }
-      it { is_expected.to receive(:new).with("users", /foo.*bar/).
+      it { is_expected.to receive(:new).
+           with("users", /foo.*bar/, ActiveRecord::Base.connection).
            and_call_original }
 
     end
@@ -49,7 +50,8 @@ RSpec.describe PerconaAr::QueryBuilder do
       let(:sql) { "alter table `users` drop `foo`" }
 
       it "adds 'COLUMN' to drop statement in order to be valid for percona" do
-        is_expected.to receive(:new).with("users", /DROP COLUMN..foo/).
+        is_expected.to receive(:new).
+          with("users", /DROP COLUMN..foo/, ActiveRecord::Base.connection).
           and_call_original
       end
     end
@@ -58,7 +60,8 @@ RSpec.describe PerconaAr::QueryBuilder do
       let(:sql) { "alter table `users` drop column `foo`" }
 
       it "leaves sql unchanged" do
-        is_expected.to receive(:new).with("users", /drop column..foo/).
+        is_expected.to receive(:new).
+          with("users", /drop column..foo/, ActiveRecord::Base.connection).
           and_call_original
       end
     end
