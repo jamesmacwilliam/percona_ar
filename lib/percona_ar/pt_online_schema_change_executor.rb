@@ -12,13 +12,13 @@ class PerconaAr::PtOnlineSchemaChangeExecutor
   end
 
   def call
-    sh "#{boilerplate}#{suffix(table, sql)}"
+    sh %Q(#{boilerplate}#{suffix(table, sql)})
   end
 
   private
 
   def suffix(table, cmd)
-    "'#{cmd}' --recursion-method none --no-check-alter --execute D=#{config[:database]},t=#{table}"
+    %Q('#{cmd.gsub("'","\"")}' --recursion-method none --no-check-alter --execute D=#{config[:database]},t=#{table})
   end
 
   def boilerplate
