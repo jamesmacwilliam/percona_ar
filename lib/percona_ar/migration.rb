@@ -1,4 +1,10 @@
-class PerconaAr::Migration < ActiveRecord::Migration
+if ActiveRecord.gem_version >= Gem::Version.new('5.0')
+  class PerconaAr::Migration < ActiveRecord::Migration[4.2]; end
+else
+  class PerconaAr::Migration < ActiveRecord::Migration; end
+end
+
+PerconaAr::Migration.class_eval do
   def connection
     @percona_connection ||=
       PerconaAr::Connection.new(ActiveRecord::Base.connection)
