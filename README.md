@@ -3,12 +3,6 @@
 [![Build
 Status](https://travis-ci.org/jamesmacwilliam/percona_ar.svg?branch=master)](https://travis-ci.org/jamesmacwilliam/percona_ar)
 
-[![Code
-Climate](https://codeclimate.com/github/jamesmacwilliam/percona_ar/badges/gpa.svg)](https://codeclimate.com/github/jamesmacwilliam/percona_ar)
-
-[![Test
-Coverage](https://codeclimate.com/github/jamesmacwilliam/percona_ar/badges/coverage.svg)](https://codeclimate.com/github/jamesmacwilliam/percona_ar/coverage)
-
 This gem adds another tool in your belt for rails migrations.  You can
 stil generate migrations, and they will function just as they always
 have, but there is also the option of generating percona_ar migrations,
