@@ -1,11 +1,12 @@
 class PerconaAr::QueryBuilder
-  def initialize
+  def initialize(conn = ActiveRecord::Base.connection)
     @tables = Hash.new {|h, k| h[k] = [] }
+    @conn = conn
   end
 
   def execute
     @tables.each do |table, snippets|
-      PerconaAr::PtOnlineSchemaChangeExecutor.new(table, snippets.join(", ")).call
+      PerconaAr::PtOnlineSchemaChangeExecutor.new(table, snippets.join(", "), @conn).call
     end
   end
 

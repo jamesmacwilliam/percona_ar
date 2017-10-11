@@ -4,11 +4,12 @@ require 'rake/file_utils'
 class PerconaAr::PtOnlineSchemaChangeExecutor
   include FileUtils
 
-  attr_accessor :sql, :table
+  attr_accessor :sql, :table, :conn
 
-  def initialize(table, sql)
+  def initialize(table, sql, conn = ActiveRecord::Base.connection)
     @table = table
     @sql = sql
+    @conn = conn
   end
 
   def call
@@ -26,6 +27,6 @@ class PerconaAr::PtOnlineSchemaChangeExecutor
   end
 
   def config
-    ActiveRecord::Base.connection_config
+    conn.instance_variable_get(:@config)
   end
 end
