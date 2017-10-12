@@ -46,6 +46,22 @@ https://www.percona.com/doc/percona-toolkit/2.1/pt-online-schema-change.html
   version gets added to schema_migrations, and rails yells at you if you
   haven't yet migrated.
 
+- Example:
+```Ruby
+class SomeMigration < PerconaAr::Migration
+  def change
+    # ALTER commands will get run by the Percona tool,
+    # all other commands will get run by ActiveRecord
+    add_column :users, :foo, :string
+  end
+
+  # Optional uses ActiveRecord by default
+  def connection
+   @percona_connection ||= PerconaAr::Connection.new(SomeModel.connection)
+ end
+end
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
@@ -60,4 +76,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/jamesm
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
