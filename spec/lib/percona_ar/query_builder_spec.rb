@@ -46,6 +46,7 @@ RSpec.describe PerconaAr::QueryBuilder do
            and_call_original }
 
     end
+
     context "when sql has alter statement with DROP but no column" do
       let(:sql) { "alter table `users` drop `foo`" }
 
@@ -61,7 +62,17 @@ RSpec.describe PerconaAr::QueryBuilder do
 
       it "leaves sql unchanged" do
         is_expected.to receive(:new).
-          with("users", /drop column..foo/, ActiveRecord::Base.connection).
+          with("users", /DROP COLUMN..foo/i, ActiveRecord::Base.connection).
+          and_call_original
+      end
+    end
+
+    context"when sql has alter statement with DROP INDEX" do
+      let(:sql) { "DROP INDEX `index_users_on_email` ON `users`" }
+
+      it "leaves sql unchanged" do
+        is_expected.to receive(:new).
+          with("users", /DROP INDEX..foo/i, ActiveRecord::Base.connection).
           and_call_original
       end
     end
