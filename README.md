@@ -55,7 +55,7 @@ class SomeMigration < PerconaAr::Migration
     add_column :users, :foo, :string
   end
 
-  #optional
+  # Optional uses ActiveRecord by default
   def connection
    @percona_connection ||= PerconaAr::Connection.new(SomeModel.connection)
  end
