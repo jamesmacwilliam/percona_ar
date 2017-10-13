@@ -15,7 +15,7 @@ class PerconaAr::QueryBuilder
       @tables[$1.to_s] << get_sql_for($2)
     elsif sql =~ /DROP INDEX/i
       drop_clause, table = sql.split(/ ON /i)
-      @tables[table] << get_sql_for(drop_clause)
+      @tables[table.delete('`')] << get_sql_for(drop_clause)
     end
     self
   end
