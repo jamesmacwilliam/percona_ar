@@ -11,7 +11,7 @@ class PerconaAr::QueryBuilder
   end
 
   def add(sql)
-    if sql =~ /^ALTER TABLE `([^`]*)` (.*)/i
+    if sql =~ /^ALTER TABLE `?([^ `]*)`? (.*)/i
       @tables[$1.to_s] << get_sql_for($2)
     end
     self

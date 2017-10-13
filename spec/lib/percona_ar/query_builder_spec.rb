@@ -41,11 +41,19 @@ RSpec.describe PerconaAr::QueryBuilder do
 
     context "when sql has alter statement" do
       let(:sql) { "alter table `users` `foo` `bar` varchar(36)" }
+
       it { is_expected.to receive(:new).
            with("users", /foo.*bar/, ActiveRecord::Base.connection).
            and_call_original }
-
     end
+
+    context "when sql has no backticks surrounding table" do
+      let(:sql) { "alter table users `foo` `bar` varchar(36)" }
+      it { is_expected.to receive(:new).
+           with("users", /foo.*bar/, ActiveRecord::Base.connection).
+           and_call_original }
+    end
+
     context "when sql has alter statement with DROP but no column" do
       let(:sql) { "alter table `users` drop `foo`" }
 
