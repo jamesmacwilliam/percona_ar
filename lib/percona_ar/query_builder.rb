@@ -16,6 +16,8 @@ class PerconaAr::QueryBuilder
     elsif sql =~ /DROP INDEX/i
       drop_clause, table = sql.split(/ ON /i)
       @tables[table.delete('`')] << get_sql_for(drop_clause)
+    elsif sql =~ /CREATE  INDEX (`?[^ ]*)  ON `?([^ `]*)`? (.*)/i
+      @tables[$2] << get_sql_for("ADD INDEX #{$1} #{$3}")
     end
     self
   end

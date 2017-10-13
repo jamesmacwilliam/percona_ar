@@ -64,7 +64,7 @@ RSpec.describe PerconaAr::QueryBuilder do
       end
     end
 
-    context"when sql has alter statement with DROP and column specification" do
+    context "when sql has alter statement with DROP and column specification" do
       let(:sql) { "alter table `users` drop column `foo`" }
 
       it "leaves sql unchanged" do
@@ -74,12 +74,22 @@ RSpec.describe PerconaAr::QueryBuilder do
       end
     end
 
-    context"when sql has alter statement with DROP INDEX" do
+    context "when sql has alter statement with DROP INDEX" do
       let(:sql) { "DROP INDEX `index_users_on_email` ON `users`" }
 
       it "leaves sql unchanged" do
         is_expected.to receive(:new).
           with("users", /DROP INDEX `index_users_on_email`/i, ActiveRecord::Base.connection).
+          and_call_original
+      end
+    end
+
+    context "when sql has alter statement with CREATE INDEX" do
+      let(:sql) { "CREATE  INDEX `index_users_on_email`  ON `users` (`email`)" }
+
+      it "converts sql to valid ALTER ADD INDEX statement" do
+        is_expected.to receive(:new).
+          with("users", /ADD INDEX `index_users_on_email` \(`email`\)/i, ActiveRecord::Base.connection).
           and_call_original
       end
     end
