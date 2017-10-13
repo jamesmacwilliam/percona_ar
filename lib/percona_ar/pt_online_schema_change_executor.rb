@@ -19,7 +19,7 @@ class PerconaAr::PtOnlineSchemaChangeExecutor
   private
 
   def suffix(table, cmd)
-    %Q('#{cmd.gsub("'","\"")}' --recursion-method none --no-check-alter --execute D=#{config[:database]},t=#{table})
+    %Q('#{cmd.gsub("'","\"")}' --recursion-method none --no-check-alter --alter-foreign-keys-method 'auto' --execute D=#{config[:database]},t=#{table})
   end
 
   def boilerplate

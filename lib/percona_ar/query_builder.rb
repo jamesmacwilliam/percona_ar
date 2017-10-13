@@ -11,8 +11,7 @@ class PerconaAr::QueryBuilder
   end
 
   def add(sql)
-    # DROP INDEX `index_studies_on_added_column` ON `studies`
-    if sql =~ /^ALTER TABLE `([^`]*)` (.*)/i
+    if sql =~ /^ALTER TABLE `?([^ `]*)`? (.*)/i
       @tables[$1.to_s] << get_sql_for($2)
     elsif sql =~ /DROP INDEX/i
       drop_clause, table = sql.split(/ ON /i)
