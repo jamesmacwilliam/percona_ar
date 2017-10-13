@@ -89,7 +89,7 @@ RSpec.describe PerconaAr::QueryBuilder do
 
       it "converts sql to valid ALTER ADD INDEX statement" do
         is_expected.to receive(:new).
-          with("users", /ADD INDEX (`email`) index_users_on_email/i, ActiveRecord::Base.connection).
+          with("users", /ADD INDEX `index_users_on_email` \(`email`\)/i, ActiveRecord::Base.connection).
           and_call_original
       end
     end
