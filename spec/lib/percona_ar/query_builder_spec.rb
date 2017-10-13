@@ -54,6 +54,14 @@ RSpec.describe PerconaAr::QueryBuilder do
            and_call_original }
     end
 
+    context "when sql has alter statement with DROP as part of a column name" do
+      let(:sql) { "alter table `users` `drop_count` varchar(36)" }
+
+      it { is_expected.to receive(:new).
+           with("users", /drop_count.*varchar/, ActiveRecord::Base.connection).
+           and_call_original }
+    end
+
     context "when sql has alter statement with DROP but no column" do
       let(:sql) { "alter table `users` drop `foo`" }
 
