@@ -79,7 +79,7 @@ RSpec.describe PerconaAr::QueryBuilder do
 
       it "leaves sql unchanged" do
         is_expected.to receive(:new).
-          with("`users`", /DROP INDEX `index_users_on_email`/i, ActiveRecord::Base.connection).
+          with("users", /DROP INDEX `index_users_on_email`/i, ActiveRecord::Base.connection).
           and_call_original
       end
     end
